@@ -1,20 +1,13 @@
 <script setup lang="ts">
 import HelloWorld from './components/HelloWorld.vue'
 import TheWelcome from './components/TheWelcome.vue'
+import Pond from './components/Pond.vue'
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  <div class="pond_container">
+    <Pond></Pond>
+  </div>
 </template>
 
 <style scoped>
@@ -25,6 +18,18 @@ header {
 .logo {
   display: block;
   margin: 0 auto 2rem;
+}
+.pond_container {
+  min-height: 50vh; /* or however tall you want */
+  min-width: 50vw;
+}
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: #111;
+  overflow: hidden;
 }
 
 @media (min-width: 1024px) {

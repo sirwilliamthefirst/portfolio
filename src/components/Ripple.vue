@@ -1,7 +1,14 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const props = defineProps({
+  originX: String,
+  originY: String,
+  id: Number,
+})
+const emit = defineEmits(['deleteRipple'])
+</script>
 
 <template>
-  <div :="$attrs" class="ripple"></div>
+  <div :="$attrs" class="ripple" @animationend="$emit('deleteRipple', props.id)"></div>
 </template>
 
 <style>

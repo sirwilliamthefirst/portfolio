@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import Ripple from './Ripple.vue'
+import Page from './Page.vue'
 const ripples = ref<{ x: number; y: number; id: number }[]>([])
 let rippleNextId = 0
 function createRipple(event: MouseEvent) {
@@ -32,6 +33,7 @@ function filterRipple(id: number) {
         :style="{ left: ripple.x + 'px', top: ripple.y + 'px' }"
       ></Ripple>
     </template>
+    <Page></Page>
   </div>
 </template>
 
@@ -40,5 +42,6 @@ function filterRipple(id: number) {
   background: radial-gradient(circle, lightblue, rgb(72, 72, 124));
   width: 100%;
   height: 100%;
+  position: relative;
 }
 </style>

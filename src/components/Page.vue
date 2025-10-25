@@ -1,21 +1,44 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-const props = defineProps({
-  left: Number,
-  top: Number,
-  id: Number,
-})
+import { ref, useTemplateRef, watch, watchEffect } from 'vue'
+
+const props = defineProps<{ lastRipple: { x: number; y: number } }>()
+const myElement = useTemplateRef('element')
 const xPos = ref(Math.random() * 100)
 const yPos = ref(Math.random() * 100)
 let dy = 0.05 * (Math.random() - 0.5)
 let dx = 0.05 * (Math.random() - 0.5)
+
+watchEffect(() => {
+  //apply physics based off position
+  const post = getElementPos()
+  if (!post) return null
+  const { x, y } = post
+  const xSide = x - props.lastRipple.x
+  const ySide = y - props.lastRipple.y
+  const dist = Math.sqrt(Math.pow(xSide, 2) + Math.pow(ySide, 2))
+  console.log('Distance' + dist)
+  const angle = Math.atan2(ySide, xSide)
+  const force = 5 / (dist + 1)
+  dx += Math.cos(angle) * force
+  dy += Math.sin(angle) * force
+  console.log('Angle: ' + angle)
+})
+
+function getElementPos(): { x: number; y: number } | null {
+  if (!myElement.value) return null
+  let x = myElement.value.getBoundingClientRect().x
+  let y = myElement.value.getBoundingClientRect().y
+  console.log('page position' + x + ', ' + y)
+  return { x, y }
+}
+
 function animatePaper() {
   //Drift
   xPos.value += dx
   yPos.value += dy
   //Slow down due to water drag
-  dx = Math.abs(dx) < 0.005 ? 0 : dx - Math.sign(dx) * 0.005
-  dy = Math.abs(dy) < 0.005 ? 0 : dy - Math.sign(dy) * 0.005
+  dx = Math.abs(dx) < 0.005 ? 0 : dx - Math.sign(dx) * 0.002
+  dy = Math.abs(dy) < 0.005 ? 0 : dy - Math.sign(dy) * 0.002
   requestAnimationFrame(animatePaper)
 }
 animatePaper()
@@ -23,6 +46,7 @@ animatePaper()
 
 <template>
   <svg
+    ref="element"
     viewBox="0 0 128 128"
     xmlns="http://www.w3.org/2000/svg"
     xmlns:xlink="http://www.w3.org/1999/xlink"

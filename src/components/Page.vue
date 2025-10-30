@@ -1,28 +1,49 @@
 <script setup lang="ts">
-import { ref, useTemplateRef, watch, watchEffect } from 'vue'
+import { ref, useTemplateRef, watchEffect, onMounted, watch } from 'vue'
 
 const props = defineProps<{ lastRipple: { x: number; y: number } }>()
 const myElement = useTemplateRef('element')
-const xPos = ref(Math.random() * 100)
-const yPos = ref(Math.random() * 100)
-let dy = 0.05 * (Math.random() - 0.5)
-let dx = 0.05 * (Math.random() - 0.5)
+const xPos = ref(0)
+const yPos = ref(0)
+const rotate = ref(0)
+let dy = 0
+let dx = 0
+let parent = myElement.value?.parentElement
 
-watchEffect(() => {
-  //apply physics based off position
-  const post = getElementPos()
-  if (!post) return null
-  const { x, y } = post
-  const xSide = x - props.lastRipple.x
-  const ySide = y - props.lastRipple.y
-  const dist = Math.sqrt(Math.pow(xSide, 2) + Math.pow(ySide, 2))
-  console.log('Distance' + dist)
-  const angle = Math.atan2(ySide, xSide)
-  const force = 5 / (dist + 1)
-  dx += Math.cos(angle) * force
-  dy += Math.sin(angle) * force
-  console.log('Angle: ' + angle)
+onMounted(() => {
+  dy = 1 * (Math.random() - 0.5)
+  dx = 1 * (Math.random() - 0.5)
+  parent = myElement.value?.parentElement
+  if (parent) {
+    const rect = myElement.value!.getBoundingClientRect()
+    xPos.value = Math.random() * (parent.clientWidth - rect.width)
+    yPos.value = Math.random() * (parent.clientHeight - rect.height)
+  }
 })
+watch(
+  () => [props.lastRipple.x, props.lastRipple.y],
+  () => {
+    //apply physics based off position
+    const post = getElementPos()
+    if (!post || !myElement.value) return null
+    const rect = myElement.value.getBoundingClientRect()
+    const { x, y } = {
+      x: (rect.left + rect.right) / 2,
+      y: (rect.bottom + rect.top) / 2,
+    }
+    console.log('center apparantly ' + x + ', ' + y)
+    const xSide = x - props.lastRipple.x
+    const ySide = y - props.lastRipple.y
+    const dist = Math.sqrt(Math.pow(xSide, 2) + Math.pow(ySide, 2))
+    console.log('Distance ' + dist)
+    const angle = Math.atan2(ySide, xSide)
+    const force = Math.min(50 / (dist + 1), 1)
+    dx += Math.cos(angle) * force
+    dy += Math.sin(angle) * force
+    console.log('Angle: ' + angle)
+  },
+  { deep: true },
+)
 
 function getElementPos(): { x: number; y: number } | null {
   if (!myElement.value) return null
@@ -36,6 +57,19 @@ function animatePaper() {
   //Drift
   xPos.value += dx
   yPos.value += dy
+  if (parent) {
+    const rect = myElement.value!.getBoundingClientRect()
+    console.log(`x: ${xPos.value}, y: ${yPos.value}`)
+    if (xPos.value > parent.clientWidth || xPos.value < 0 - rect.width) {
+      xPos.value = Math.max(Math.min(parent.clientWidth, xPos.value), 0 - rect.width)
+      dx = dx * -1
+    }
+    if (yPos.value > parent.clientHeight || yPos.value < 0 - rect.height) {
+      yPos.value = Math.max(Math.min(parent.clientHeight, yPos.value), 0 - rect.height)
+      dy = dy * -1
+    }
+  }
+  rotate.value = (rotate.value + 0.5) % 360
   //Slow down due to water drag
   dx = Math.abs(dx) < 0.005 ? 0 : dx - Math.sign(dx) * 0.002
   dy = Math.abs(dy) < 0.005 ? 0 : dy - Math.sign(dy) * 0.002
@@ -52,8 +86,9 @@ animatePaper()
     xmlns:xlink="http://www.w3.org/1999/xlink"
     :style="{
       position: 'absolute',
-      top: `${yPos}%`,
-      left: `${xPos}%`,
+      top: `${yPos}px`,
+      left: `${xPos}px`,
+      transform: `rotate(${rotate}deg)`,
     }"
     aria-hidden="true"
     role="img"

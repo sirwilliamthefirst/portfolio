@@ -39,6 +39,9 @@ function filterRipple(id: number) {
     <Page :lastRipple="lastClick"></Page>
     <Page :lastRipple="lastClick"></Page>
     <Page :lastRipple="lastClick"></Page>
+    <Page :lastRipple="lastClick"></Page>
+    <Page :lastRipple="lastClick"></Page>
+    <Page :lastRipple="lastClick"></Page>
   </div>
 </template>
 

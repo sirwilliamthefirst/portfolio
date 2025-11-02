@@ -10,9 +10,10 @@ import Pond from './components/Pond.vue'
   </div>
 </template>
 
-<style scoped>
+<style>
 .pond_container {
   width: 50vw;
   height: 50vh;
+  margin: 0 auto; /* centers horizontally */
 }
 </style>

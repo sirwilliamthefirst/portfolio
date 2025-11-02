@@ -5,9 +5,10 @@ const props = defineProps<{ lastRipple: { x: number; y: number } }>()
 const myElement = useTemplateRef('element')
 const xPos = ref(0)
 const yPos = ref(0)
-const rotate = ref(0)
+const rotatation = ref(0)
 let dy = 0
 let dx = 0
+let dr = 0
 let parent = myElement.value?.parentElement
 
 onMounted(() => {
@@ -23,28 +24,37 @@ onMounted(() => {
 watch(
   () => [props.lastRipple.x, props.lastRipple.y],
   () => {
-    //apply physics based off position
-    const post = getElementPos()
-    if (!post || !myElement.value) return null
-    const rect = myElement.value.getBoundingClientRect()
-    const { x, y } = {
-      x: (rect.left + rect.right) / 2,
-      y: (rect.bottom + rect.top) / 2,
-    }
-    console.log('center apparantly ' + x + ', ' + y)
-    const xSide = x - props.lastRipple.x
-    const ySide = y - props.lastRipple.y
-    const dist = Math.sqrt(Math.pow(xSide, 2) + Math.pow(ySide, 2))
-    console.log('Distance ' + dist)
+    const element = myElement.value
+    const parent = element?.parentElement
+    if (!parent || !element) return
+
+    const rect = element.getBoundingClientRect()
+    const parentRect = parent.getBoundingClientRect()
+
+    // Convert element center to parent-relative coordinates
+    const centerX = rect.left - parentRect.left + rect.width / 2
+    const centerY = rect.top - parentRect.top + rect.height / 2
+
+    const xSide = centerX - props.lastRipple.x
+    const ySide = centerY - props.lastRipple.y
+    const dist = Math.sqrt(xSide ** 2 + ySide ** 2)
     const angle = Math.atan2(ySide, xSide)
     const force = Math.min(50 / (dist + 1), 1)
+
     dx += Math.cos(angle) * force
     dy += Math.sin(angle) * force
-    console.log('Angle: ' + angle)
-  },
-  { deep: true },
-)
 
+    // Rotational force (new)
+    const targetAngle = angle // or angle + Math.PI to face away
+    let angleDiff = targetAngle - rotatation.value // assuming you have a rotation variable
+
+    // Normalize to shortest path
+    while (angleDiff > Math.PI) angleDiff -= 2 * Math.PI
+    while (angleDiff < -Math.PI) angleDiff += 2 * Math.PI
+
+    dr += angleDiff * force * 0.5 // rotational force
+  },
+)
 function getElementPos(): { x: number; y: number } | null {
   if (!myElement.value) return null
   let x = myElement.value.getBoundingClientRect().x
@@ -57,9 +67,9 @@ function animatePaper() {
   //Drift
   xPos.value += dx
   yPos.value += dy
+  rotatation.value += dr
   if (parent) {
     const rect = myElement.value!.getBoundingClientRect()
-    console.log(`x: ${xPos.value}, y: ${yPos.value}`)
     if (xPos.value > parent.clientWidth || xPos.value < 0 - rect.width) {
       xPos.value = Math.max(Math.min(parent.clientWidth, xPos.value), 0 - rect.width)
       dx = dx * -1
@@ -69,10 +79,11 @@ function animatePaper() {
       dy = dy * -1
     }
   }
-  rotate.value = (rotate.value + 0.5) % 360
+
   //Slow down due to water drag
   dx = Math.abs(dx) < 0.005 ? 0 : dx - Math.sign(dx) * 0.002
   dy = Math.abs(dy) < 0.005 ? 0 : dy - Math.sign(dy) * 0.002
+  dr = Math.abs(dr) < 0.005 ? 0 : dr - Math.sign(dr) * 0.002
   requestAnimationFrame(animatePaper)
 }
 animatePaper()
@@ -88,7 +99,7 @@ animatePaper()
       position: 'absolute',
       top: `${yPos}px`,
       left: `${xPos}px`,
-      transform: `rotate(${rotate}deg)`,
+      transform: `rotate(${rotatation}deg)`,
     }"
     aria-hidden="true"
     role="img"

@@ -12,8 +12,9 @@ import Pond from './components/Pond.vue'
 
 <style>
 .pond_container {
-  width: 50vw;
-  height: 50vh;
+  width: 100vw;
+  height: 100vh;
   margin: 0 auto; /* centers horizontally */
+  overflow: hidden;
 }
 </style>

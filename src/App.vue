@@ -48,6 +48,7 @@ import Pond from './components/Pond.vue'
   font-family: 'cloudy_font';
   pointer-events: none;
   opacity: 0;
+  font-size: 1rem;
   animation: title_pop 0.4s linear 2 forwards;
 }
 </style>

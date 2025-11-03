@@ -3,6 +3,7 @@ import { ref, useTemplateRef, watchEffect, onMounted, watch } from 'vue'
 
 const props = defineProps<{ lastRipple: { x: number; y: number } }>()
 const myElement = useTemplateRef('element')
+const svgElement = useTemplateRef('svgElement')
 const xPos = ref(0)
 const yPos = ref(0)
 const rotatation = ref(0)
@@ -21,11 +22,12 @@ onMounted(() => {
     yPos.value = Math.random() * (parent.clientHeight - rect.height)
   }
 })
+
 watch(
   () => [props.lastRipple.x, props.lastRipple.y],
   () => {
-    const element = myElement.value
-    const parent = element?.parentElement
+    const element = svgElement.value
+    const parent = myElement.value?.parentElement
     if (!parent || !element) return
 
     const rect = element.getBoundingClientRect()
@@ -44,24 +46,17 @@ watch(
     dx += Math.cos(angle) * force
     dy += Math.sin(angle) * force
 
-    // Rotational force (new)
-    const targetAngle = angle // or angle + Math.PI to face away
-    let angleDiff = targetAngle - rotatation.value // assuming you have a rotation variable
+    // Rotational force
+    const targetAngle = angle
+    let angleDiff = targetAngle - rotatation.value
 
     // Normalize to shortest path
     while (angleDiff > Math.PI) angleDiff -= 2 * Math.PI
     while (angleDiff < -Math.PI) angleDiff += 2 * Math.PI
 
-    dr += angleDiff * force * 0.5 // rotational force
+    dr += angleDiff * force * 0.5
   },
 )
-function getElementPos(): { x: number; y: number } | null {
-  if (!myElement.value) return null
-  let x = myElement.value.getBoundingClientRect().x
-  let y = myElement.value.getBoundingClientRect().y
-  console.log('page position' + x + ', ' + y)
-  return { x, y }
-}
 
 function animatePaper() {
   //Drift
@@ -90,52 +85,91 @@ animatePaper()
 </script>
 
 <template>
-  <svg
+  <div
     ref="element"
-    viewBox="0 0 128 128"
-    xmlns="http://www.w3.org/2000/svg"
-    xmlns:xlink="http://www.w3.org/1999/xlink"
+    class="page-container"
     :style="{
       position: 'absolute',
       top: `${yPos}px`,
       left: `${xPos}px`,
-      transform: `rotate(${rotatation}deg)`,
     }"
-    aria-hidden="true"
-    role="img"
-    class="iconify iconify--noto page"
-    preserveAspectRatio="xMidYMid meet"
-    fill="#000000"
   >
-    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-    <g id="SVGRepo_iconCarrier">
-      <path fill="#ffffff" d="M87.85 6.19H16.8v115.45h94.62V28.8z"></path>
-      <g
-        fill="none"
-        stroke="#b0bec5"
-        stroke-width="3.865"
-        stroke-linecap="round"
-        stroke-miterlimit="10"
-      >
-        <path d="M33.34 41.05H94.5"></path>
-        <path d="M33.34 55.68H94.5"></path>
-        <path d="M33.34 70.3H94.5"></path>
-        <path d="M33.34 84.93H94.5"></path>
-        <path d="M33.34 99.56h26.15"></path>
+    <svg
+      ref="svgElement"
+      viewBox="0 0 128 128"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      aria-hidden="true"
+      role="img"
+      class="iconify iconify--noto page"
+      :style="{
+        transform: `rotate(${rotatation}deg)`,
+      }"
+      preserveAspectRatio="xMidYMid meet"
+      fill="#000000"
+    >
+      <!-- SVG content stays the same -->
+      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+      <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+      <g id="SVGRepo_iconCarrier">
+        <path fill="#ffffff" d="M87.85 6.19H16.8v115.45h94.62V28.8z"></path>
+        <g
+          fill="none"
+          stroke="#b0bec5"
+          stroke-width="3.865"
+          stroke-linecap="round"
+          stroke-miterlimit="10"
+        >
+          <path d="M33.34 41.05H94.5"></path>
+          <path d="M33.34 55.68H94.5"></path>
+          <path d="M33.34 70.3H94.5"></path>
+          <path d="M33.34 84.93H94.5"></path>
+          <path d="M33.34 99.56h26.15"></path>
+        </g>
+        <path
+          d="M109.45 23.59L92.79 6.88A10.555 10.555 0 0 0 85.54 4h-68.5c-1.55 0-2.81 1.26-2.81 2.81v114.38c0 1.55 1.26 2.81 2.81 2.81h93.93c1.55 0 2.81-1.26 2.81-2.81V31.28c-.01-2.91-2.21-5.69-4.33-7.69zm.32 96.41H18.23V8h64.66c2.12 0 3.85 1.72 3.85 3.85v17.88h17.34c3.14 0 5.69 1.73 5.69 5.69V120z"
+          fill="#6fbff0"
+        ></path>
       </g>
-      <path
-        d="M109.45 23.59L92.79 6.88A10.555 10.555 0 0 0 85.54 4h-68.5c-1.55 0-2.81 1.26-2.81 2.81v114.38c0 1.55 1.26 2.81 2.81 2.81h93.93c1.55 0 2.81-1.26 2.81-2.81V31.28c-.01-2.91-2.21-5.69-4.33-7.69zm.32 96.41H18.23V8h64.66c2.12 0 3.85 1.72 3.85 3.85v17.88h17.34c3.14 0 5.69 1.73 5.69 5.69V120z"
-        fill="#6fbff0"
-      ></path>
-    </g>
-  </svg>
+    </svg>
+    <span class="poetrytext">Poem</span>
+  </div>
 </template>
 
 <style>
-.page {
+.page-container {
   width: 5%;
   height: 5%;
   position: absolute;
+}
+
+.page {
+  width: 100%;
+  height: 100%;
+}
+.poetrytext {
+  bottom: 150%;
+  left: 10%;
+  visibility: hidden;
+  background-color: black;
+  color: #fff;
+  position: relative;
+  z-index: 2;
+  pointer-events: none;
+}
+.page-container:hover .poetrytext {
+  visibility: visible;
+  animation: fade-in-text 1s forwards;
+  animation-delay: 0.5s;
+  transition-delay: 0.5s;
+}
+
+@keyframes fade-in-text {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.75;
+  }
 }
 </style>

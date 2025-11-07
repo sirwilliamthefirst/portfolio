@@ -43,6 +43,7 @@ function filterRipple(id: number) {
     <Page :lastRipple="lastClick"></Page>
     <Page :lastRipple="lastClick"></Page>
   </div>
+  <div class="modals" id="modals"></div>
 </template>
 
 <style>
@@ -51,5 +52,14 @@ function filterRipple(id: number) {
   width: 100%;
   height: 100%;
   position: relative;
+}
+.modals {
+  position: absolute;
+  z-index: 3;
+  margin: 0;
+  width: 40%;
+  left: 50%;
+  top: 2%;
+  transform: translate(-50%, 0%);
 }
 </style>

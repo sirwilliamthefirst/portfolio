@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, useTemplateRef, watchEffect, onMounted, watch } from 'vue'
+import PoemPage from './PoemPage.vue'
 
 const props = defineProps<{ lastRipple: { x: number; y: number } }>()
 const myElement = useTemplateRef('element')
@@ -7,6 +8,7 @@ const svgElement = useTemplateRef('svgElement')
 const xPos = ref(0)
 const yPos = ref(0)
 const rotatation = ref(0)
+const open = ref(false)
 let dy = 0
 let dx = 0
 let dr = 0
@@ -93,6 +95,7 @@ animatePaper()
       top: `${yPos}px`,
       left: `${xPos}px`,
     }"
+    @click.stop="open = true"
   >
     <svg
       ref="svgElement"
@@ -134,6 +137,8 @@ animatePaper()
     </svg>
     <span class="poetrytext">Poem</span>
   </div>
+
+  <PoemPage v-if="open"></PoemPage>
 </template>
 
 <style>

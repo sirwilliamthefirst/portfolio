@@ -9,6 +9,7 @@ const xPos = ref(0)
 const yPos = ref(0)
 const rotatation = ref(0)
 const open = ref(false)
+const poemRef = ref(null)
 let dy = 0
 let dx = 0
 let dr = 0
@@ -137,8 +138,8 @@ animatePaper()
     </svg>
     <span class="poetrytext">Poem</span>
   </div>
-  <div v-if="open">
-    <div><PoemPage></PoemPage></div>
+  <div v-if="open" class="modal-bg" @click.self="open = false">
+    <PoemPage @click.stop></PoemPage>
   </div>
 </template>
 
@@ -147,6 +148,19 @@ animatePaper()
   width: 5%;
   height: 5%;
   position: absolute;
+}
+
+.modal-bg {
+  width: 100vw;
+  height: 100vh;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  background-color: rgb(0, 0, 0, 0.5);
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  display: flex;
 }
 
 .page {

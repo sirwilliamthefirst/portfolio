@@ -95,7 +95,6 @@ animatePaper()
       top: `${yPos}px`,
       left: `${xPos}px`,
     }"
-    @click.stop="open = true"
   >
     <svg
       ref="svgElement"
@@ -108,6 +107,7 @@ animatePaper()
       :style="{
         transform: `rotate(${rotatation}deg)`,
       }"
+      @click.stop="open = true"
       preserveAspectRatio="xMidYMid meet"
       fill="#000000"
     >
@@ -137,8 +137,9 @@ animatePaper()
     </svg>
     <span class="poetrytext">Poem</span>
   </div>
-
-  <PoemPage v-if="open"></PoemPage>
+  <div v-if="open">
+    <div><PoemPage></PoemPage></div>
+  </div>
 </template>
 
 <style>
@@ -154,7 +155,7 @@ animatePaper()
 }
 .poetrytext {
   bottom: 150%;
-  left: 10%;
+  left: 20%;
   visibility: hidden;
   background-color: black;
   color: #fff;

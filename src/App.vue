@@ -38,6 +38,21 @@ import Pond from './components/Pond.vue'
     transform: scale(1); /* Settle to normal size */
   }
 }
+
+@keyframes wavy {
+  0% {
+    opacity: 1;
+    top: 2%;
+  }
+  50% {
+    top: 3%;
+  }
+  100% {
+    top: 2%;
+    opacity: 1;
+  }
+}
+
 .pond_title {
   position: fixed;
   color: white;
@@ -47,8 +62,8 @@ import Pond from './components/Pond.vue'
   z-index: 1;
   font-family: 'cloudy_font';
   pointer-events: none;
-  opacity: 0;
+  opacity: 1;
   font-size: 1rem;
-  animation: title_pop 0.4s linear 2 forwards;
+  animation: wavy 4s ease-in-out infinite;
 }
 </style>

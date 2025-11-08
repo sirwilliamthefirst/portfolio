@@ -138,7 +138,7 @@ animatePaper()
     </svg>
     <span class="poetrytext">Poem</span>
   </div>
-  <div v-if="open" class="modal-bg" @click.self="open = false">
+  <div v-if="open" class="modal-bg" @click.stop="open = false">
     <PoemPage @click.stop></PoemPage>
   </div>
 </template>

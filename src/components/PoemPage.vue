@@ -41,10 +41,20 @@
   z-index: 3;
   width: 100%;
   border: 1cap;
+  padding: 3% 10% 3% 10%;
 }
 .poemPage > * {
   margin: auto;
   text-align: center;
-  width: 80%;
+  width: 100%;
+  margin: clamp(10px, 3vw, 20px) 0;
+  font-size: 5rem;
+}
+.poemPage > h1 {
+  margin: auto;
+  text-align: center;
+  width: 100%;
+  margin: clamp(10px, 3vw, 20px) 0;
+  font-size: 2rem;
 }
 </style>

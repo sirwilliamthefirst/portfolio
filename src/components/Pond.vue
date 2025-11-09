@@ -54,12 +54,19 @@ function filterRipple(id: number) {
   position: relative;
 }
 .modals {
+  background-color: #faf4ed;
   position: absolute;
   z-index: 3;
-  margin: 0;
+  margin: auto;
   width: 40%;
   left: 50%;
-  top: 2%;
+  top: 10%;
+  max-height: 90vh;
+  overflow-y: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
   transform: translate(-50%, 0%);
+  display: flex;
+  justify-content: center;
 }
 </style>

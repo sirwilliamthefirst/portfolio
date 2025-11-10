@@ -38,6 +38,7 @@
 <style>
 .poemPage {
   background-color: #faf4ed;
+  position: fixed;
   z-index: 3;
   width: 100%;
   border: 1cap;
@@ -48,7 +49,7 @@
   text-align: center;
   width: 100%;
   margin: clamp(10px, 3vw, 20px) 0;
-  font-size: 5rem;
+  font-size: 1.2rem;
 }
 .poemPage > h1 {
   margin: auto;

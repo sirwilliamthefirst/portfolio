@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
 import Pond from './components/Pond.vue'
 </script>
 
@@ -13,10 +11,12 @@ import Pond from './components/Pond.vue'
 
 <style>
 .pond_container {
+  position: fixed;
   width: 100vw;
   height: 100vh;
   margin: 0 auto; /* centers horizontally */
-  overflow: hidden;
+  overflow: auto;
+  z-index: 2;
 }
 
 @font-face {

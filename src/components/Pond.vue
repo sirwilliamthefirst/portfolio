@@ -1,10 +1,13 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 import Ripple from './Ripple.vue'
 import Page from './Page.vue'
+import poems from '../data/poems.json'
 const ripples = ref<{ x: number; y: number; id: number }[]>([])
 const lastClick = ref({ x: 0, y: 0 })
 let rippleNextId = 0
+const poemArray = poems
+console.log(poemArray)
 function createRipple(event: MouseEvent) {
   console.log('create ripple!')
   const target = event.currentTarget as HTMLElement
@@ -35,13 +38,9 @@ function filterRipple(id: number) {
         :style="{ left: ripple.x + 'px', top: ripple.y + 'px' }"
       ></Ripple>
     </template>
-    <Page :lastRipple="lastClick"></Page>
-    <Page :lastRipple="lastClick"></Page>
-    <Page :lastRipple="lastClick"></Page>
-    <Page :lastRipple="lastClick"></Page>
-    <Page :lastRipple="lastClick"></Page>
-    <Page :lastRipple="lastClick"></Page>
-    <Page :lastRipple="lastClick"></Page>
+  </div>
+  <div v-for="poem in poemArray" :key="poem.id">
+    <Page :lastRipple="lastClick" :title="poem.title"></Page>>
   </div>
   <div class="modals" id="modals"></div>
 </template>
@@ -51,18 +50,17 @@ function filterRipple(id: number) {
   background: radial-gradient(circle, lightblue, rgb(72, 72, 124));
   width: 100%;
   height: 100%;
-  position: relative;
+  position: fixed;
 }
 .modals {
-  background-color: #faf4ed;
   position: absolute;
+  background-attachment: fixed;
   z-index: 3;
   margin: auto;
   width: 40%;
   left: 50%;
   top: 10%;
   max-height: 90vh;
-  overflow-y: auto;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE/Edge */
   transform: translate(-50%, 0%);

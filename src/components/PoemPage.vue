@@ -48,7 +48,7 @@
   text-align: center;
   width: 100%;
   margin: clamp(10px, 3vw, 20px) 0;
-  font-size: 5rem;
+  font-size: 1.5rem;
 }
 .poemPage > h1 {
   margin: auto;

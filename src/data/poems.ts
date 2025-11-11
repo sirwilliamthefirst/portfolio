@@ -45,4 +45,55 @@ export const poemCollection = [
     </div>
   `,
   },
+  {
+    id: 1,
+    title: 'Waves',
+    author: 'William Braxton',
+    html: ` <div class="stanza">
+      <p>Lovers that'll never touch—</p>
+      <p>in pursuit of the other</p>
+      <p>incessantly, they meet</p>
+      <p>the shore, disintegrating.</p>
+    </div>
+    <div class="stanza">
+      <p>Sedimentary sands tell</p>
+      <p>a tale of shattered hearts.</p>
+      <p>Demigods without Gods to kill.</p>
+    </div>
+    `,
+  },
+  {
+    id: 2,
+    title: 'My green-eyed one (Peace to Kaufman)',
+    author: 'William Braxton',
+    html: ` <div class="stanza">
+  <p>My green-eyed one (Peace to Kaufman)</p>
+  <p>My green-eyed one, before this</p>
+  <p>Earth stops spinning, think of me.</p>
+  <p>Remember, I am here too, my green-</p>
+  <p>Eyed one whose gaze is endless, grasping</p>
+  <p>Eternity in a lifetime.</p>
+  <p>inheriting ancestral DNA</p>
+  <p>Baked on Parchment—its imitations</p>
+  <p>or otherwise, remember I,</p>
+  <p>My late-evening sunrise.</p>
+  <p>My mysteries created for you</p>
+  <p>Out of wonder, my green-eyed</p>
+  <p>One, bask in luster and brilliance;</p>
+  <p>Constellations of your starry skies shine</p>
+  <p>Like pina coladas served at the edge</p>
+  <p>Of the universe.</p>
+  <p>My green-eyed one, whose eyes</p>
+  <p>have me melt, like popsicles</p>
+  <p>on the fourth of July,</p>
+  <p>whose jasmine tea skin</p>
+  <p>brings warmth to my soul.</p>
+  <p>It's you, I wish to know</p>
+  <p>And your secret day-dreams,</p>
+  <p>Dreamt amongst the droning</p>
+  <p>doldrums of daily decorum,</p>
+  <p>My green-eyed one.</p>
+</div>
+    `,
+  },
 ]

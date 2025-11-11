@@ -30,7 +30,7 @@ const poem = computed(() => ({
 
 <style>
 .stanza {
-  padding: 4% 4%;
+  padding: 0.5% 0.5%;
 }
 .poemPage {
   background-color: #faf4ed;
@@ -51,7 +51,7 @@ const poem = computed(() => ({
   margin: auto;
   text-align: center;
   width: 100%;
-  margin: clamp(10px, 3vw, 20px) 0;
+  margin: clamp(20px, 5vw, 40px) 0;
   font-size: 2rem;
 }
 </style>

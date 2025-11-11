@@ -59,15 +59,21 @@ function filterRipple(id: number) {
   background-attachment: fixed;
   z-index: 3;
   margin: auto;
-  width: 40%;
+  width: 70%; /* Mobile first */
   left: 50%;
   top: 10%;
   max-height: 90vh;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE/Edge */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   transform: translate(-50%, 0%);
   display: flex;
   justify-content: center;
+}
+
+@media (min-width: 769px) {
+  .modals {
+    width: 40%;
+  }
 }
 
 @keyframes wavy {

@@ -31,6 +31,7 @@ function filterRipple(id: number) {
 </script>
 
 <template>
+  <div class="pond_title"><h1>Poetry Pond</h1></div>
   <div @click="createRipple" class="pond">
     <template v-for="ripple in ripples" :key="ripple.id">
       <Ripple
@@ -67,5 +68,37 @@ function filterRipple(id: number) {
   transform: translate(-50%, 0%);
   display: flex;
   justify-content: center;
+}
+
+@keyframes wavy {
+  0% {
+    opacity: 1;
+    top: 2%;
+  }
+  50% {
+    top: 3%;
+  }
+  100% {
+    top: 2%;
+    opacity: 1;
+  }
+}
+
+@font-face {
+  font-family: 'cloudy_font';
+  src: url('../assets/cotton-cloud.regular.ttf') format('truetype');
+}
+.pond_title {
+  position: fixed;
+  color: white;
+  width: 100%;
+  text-align: center;
+  top: 2%;
+  z-index: 1;
+  font-family: 'cloudy_font';
+  pointer-events: none;
+  opacity: 1;
+  font-size: 1rem;
+  animation: wavy 4s ease-in-out infinite;
 }
 </style>

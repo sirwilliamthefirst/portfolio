@@ -67,7 +67,6 @@ export const poemCollection = [
     title: 'My green-eyed one (Peace to Kaufman)',
     author: 'William Braxton',
     html: ` <div class="stanza">
-  <p>My green-eyed one (Peace to Kaufman)</p>
   <p>My green-eyed one, before this</p>
   <p>Earth stops spinning, think of me.</p>
   <p>Remember, I am here too, my green-</p>
@@ -94,6 +93,25 @@ export const poemCollection = [
   <p>doldrums of daily decorum,</p>
   <p>My green-eyed one.</p>
 </div>
+    `,
+  },
+  {
+    id: 3,
+    title: 'Gleam',
+    author: 'Garret Bischof',
+    html: ` <div class="stanza">
+  <p>The girl was in the room. Like other times the girl was in the room she</p>
+  <p>scarcely noticed it. She saw a metallic box. It was the oven. She heard some</p>
+  <p>sounds. It was the piano. She smelled something familiar. It was dinner.</p>
+  <p>There she stood vaguely aware of the room.</p>
+  </div>
+  <div class="stanza">
+  <p>But today is different. The oven reflects a magical light that makes her feel</p>
+  <p>alive. She connects with every note from the piano and the waterfall of sounds</p>
+  <p>shines in her mind. The smell of dinner radiates nostalgia through her body.</p>
+  <p>Today, for an unknown reason, the girl notices the room and the room is</p>
+  <p>gleaming.</p>
+
     `,
   },
 ]

@@ -23,6 +23,7 @@ const poem = computed(() => ({
   <Teleport defer to="#modals">
     <div class="poemPage">
       <h1>{{ poem.title }}</h1>
+      <h2>{{ poem.author }}</h2>
       <span v-html="poem.html"></span>
     </div>
   </Teleport>
@@ -41,17 +42,20 @@ const poem = computed(() => ({
   padding: 3% 10% 3% 10%;
 }
 .poemPage > * {
-  margin: auto;
   text-align: center;
   width: 100%;
-  margin: clamp(10px, 3vw, 20px) 0;
   font-size: 1.2rem;
 }
 .poemPage > h1 {
+  text-align: center;
+  width: 100%;
+  font-size: 2rem;
+}
+.poemPage > h2 {
   margin: auto;
   text-align: center;
   width: 100%;
-  margin: clamp(20px, 5vw, 40px) 0;
-  font-size: 2rem;
+  font-size: 0.9rem;
+  font-weight: bold;
 }
 </style>

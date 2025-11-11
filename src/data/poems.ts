@@ -58,7 +58,6 @@ export const poemCollection = [
     <div class="stanza">
       <p>Sedimentary sands tell</p>
       <p>a tale of shattered hearts.</p>
-      <p>Demigods without Gods to kill.</p>
     </div>
     `,
   },

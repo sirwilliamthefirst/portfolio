@@ -40,9 +40,9 @@ function filterRipple(id: number) {
       ></Ripple>
     </template>
   </div>
-  <div v-for="poem in poemCollection" :key="poem.id">
+  <template v-for="poem in poemCollection" :key="poem.id">
     <Page :lastRipple="lastClick" :id="poem.id"></Page>>
-  </div>
+  </template>
   <div class="modals" id="modals"></div>
 </template>
 

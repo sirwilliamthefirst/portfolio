@@ -1,41 +1,37 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { poemCollection } from '@/data/poems'
+import { toEditorSettings } from 'typescript'
+import { computed, onMounted, reactive, ref } from 'vue'
+
+interface Poem {
+  id: number
+  title: string
+  author: string
+  html: string
+}
+
+const props = defineProps<{ id: number }>()
+const poem = computed(() => ({
+  id: props.id,
+  title: poemCollection[props.id]?.title,
+  author: poemCollection[props.id]?.author,
+  html: poemCollection[props.id]?.html,
+}))
+</script>
 
 <template>
   <Teleport defer to="#modals">
     <div class="poemPage">
-      <h1>Poem Title</h1>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae
-        pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu
-        aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas.
-        Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class
-        aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos. Lorem
-        ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae
-        pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu
-        aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas.
-        Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class
-        aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos. Lorem
-        ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae
-        pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu
-        aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas.
-        Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class
-        aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos. Lorem
-        ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae
-        pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu
-        aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas.
-        Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class
-        aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos. Lorem
-        ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae
-        pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu
-        aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas.
-        Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class
-        aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
-      </p>
+      <h1>{{ poem.title }}</h1>
+      <span v-html="poem.html"></span>
     </div>
   </Teleport>
 </template>
 
 <style>
+.stanza {
+  padding: 4% 4%;
+}
 .poemPage {
   background-color: #faf4ed;
   position: fixed;

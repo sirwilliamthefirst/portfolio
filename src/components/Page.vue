@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { ref, useTemplateRef, watchEffect, onMounted, watch } from 'vue'
-import PoemPage from './PoemPage.vue'
+import { ref, useTemplateRef, watchEffect, onMounted, watch, inject } from 'vue'
+import Poem from './Poem.vue'
 
-const props = defineProps<{ lastRipple: { x: number; y: number } }>()
+const props = defineProps<{ lastRipple: { x: number; y: number }; id: number }>()
+const poemCollection = inject('poemCollection')
+
 const myElement = useTemplateRef('element')
 const svgElement = useTemplateRef('svgElement')
 const xPos = ref(0)
@@ -10,6 +12,7 @@ const yPos = ref(0)
 const rotatation = ref(0)
 const open = ref(false)
 const poemRef = ref(null)
+
 let dy = 0
 let dx = 0
 let dr = 0
@@ -139,7 +142,7 @@ animatePaper()
     <span class="poetrytext">Poem</span>
   </div>
   <div v-if="open" class="modal-bg" @click.stop="open = false">
-    <PoemPage @click.stop></PoemPage>
+    <Poem :id="props.id" @click.stop></Poem>
   </div>
 </template>
 
@@ -153,7 +156,7 @@ animatePaper()
 .modal-bg {
   width: 100vw;
   height: 100vh;
-  z-index: 2;
+  z-index: 3;
   top: 0;
   left: 0;
   background-color: rgb(0, 0, 0, 0.5);
